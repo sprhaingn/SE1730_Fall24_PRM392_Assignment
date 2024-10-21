@@ -6,7 +6,6 @@
     android:background="#1A1A2E"
     android:padding="16dp">
 
-    <!-- Toolbar section with Title and Plus button -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -36,7 +35,6 @@
             app:tint="#FFFFFF" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- RecyclerView for displaying quiz/collection list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_collections"
         android:layout_width="match_parent"
