@@ -20,6 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".Home"
+            android:name=".Activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
