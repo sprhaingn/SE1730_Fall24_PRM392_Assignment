@@ -1,6 +1,8 @@
 package com.fptu.hainxhe172366.se1730assignment.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -71,4 +73,28 @@ public class DBContext extends SQLiteOpenHelper {
         }
         onCreate(db);
     }
+
+    public boolean addUser(String userName, String userEmail, String userPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("user_name", userName);
+        values.put("user_email", userEmail);
+        values.put("user_password", userPassword);
+        values.put("is_active", 1);
+
+        long result = db.insert(TB_USER, null, values);
+        db.close();
+        return result != -1;
+    }
+
+    public boolean validateUser(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
+
+        boolean userExists = cursor.getCount() > 0;
+        cursor.close();
+        return userExists;
+    }
+
 }
