@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#1A1A2E"
     tools:context=".MainActivity">
-    <!-- Search Bar -->
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="320dp"
@@ -21,7 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Logout Button -->
     <ImageView
         android:id="@+id/logoutLogo"
         android:layout_width="40dp"
@@ -34,7 +33,6 @@
         app:layout_constraintTop_toTopOf="@id/searchView"
         app:layout_constraintVertical_bias="0.25" />
 
-    <!-- RecyclerView for Quiz Collections -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -46,7 +44,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-    <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

@@ -28,13 +28,13 @@
         android:layout_margin="16dp"
         android:backgroundTint="#2D2D44"
         android:hint="Collection Name"
+        android:minHeight="48dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#888888"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <!-- List of Terms and Definitions -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -69,6 +69,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="#444466"
                         android:hint="Term"
+                        android:minHeight="48dp"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#888888" />
 
@@ -80,6 +81,7 @@
                         android:layout_marginTop="8dp"
                         android:backgroundTint="#444466"
                         android:hint="Definition"
+                        android:minHeight="48dp"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#888888" />
                 </LinearLayout>
@@ -97,6 +99,7 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="#4BA8FE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
