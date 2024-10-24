@@ -1,5 +1,6 @@
 package com.fptu.hainxhe172366.se1730assignment.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.fptu.hainxhe172366.se1730assignment.Fragment.HomeFragment;
 import com.fptu.hainxhe172366.se1730assignment.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,6 +31,10 @@ public class HomePage extends AppCompatActivity {
         });
         bindingView();
         bindingAction();
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        }
     }
 
     private void bindingView() {
@@ -41,22 +47,28 @@ public class HomePage extends AppCompatActivity {
     }
 
     private boolean onClickNavigation(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.navigation_home:
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_home) {
+                loadFragment(new HomeFragment());
                 return true;
-            case R.id.navigation_add:
+            } else if (itemId == R.id.navigation_add) {
+                startActivity(new Intent(this, AddQuiz.class));
                 return true;
-            case R.id.navigation_myset:
+            } else if (itemId == R.id.navigation_myset) {
+//                loadFragment(new MenuFragment());
                 return true;
-            default:
-                return false;
-        }
+            }
+            return false;
+        });
+        return false;
     }
+
 
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 }
