@@ -12,9 +12,7 @@
         android:title="Add" />
 
     <item
-        android:id="@+id/navigation_collection"
+        android:id="@+id/navigation_myset"
         android:icon="@drawable/ic_collection"
-        android:title="Collection" />
-
-
+        android:title="My Set" />
 </menu>

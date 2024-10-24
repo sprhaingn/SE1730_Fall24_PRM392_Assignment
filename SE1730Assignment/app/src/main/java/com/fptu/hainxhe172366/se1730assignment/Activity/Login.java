@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
-import com.fptu.hainxhe172366.se1730assignment.MainActivity;
 import com.fptu.hainxhe172366.se1730assignment.R;
 
 public class Login extends AppCompatActivity {
@@ -59,7 +58,7 @@ public class Login extends AppCompatActivity {
         boolean isValidUser = dbContext.validateUser(email, password);
         if (isValidUser) {
             Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, HomePage.class);
             startActivity(intent);
             finish();
         } else {
