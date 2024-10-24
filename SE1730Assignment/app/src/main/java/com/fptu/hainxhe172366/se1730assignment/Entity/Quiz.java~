@@ -1,0 +1,9 @@
+package com.fptu.hainxhe172366.se1730assignment.Entity;
+
+public class Quiz {
+    private int quiz_id;
+    private String quiz_name;
+    private String addedDate;
+    private boolean is_active;
+    private int user_id;
+}
