@@ -97,4 +97,16 @@ public class DBContext extends SQLiteOpenHelper {
         return userExists;
     }
 
+    public boolean addQuiz(String quizName, String addedDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("quiz_name", quizName);
+        values.put("addedDate", addedDate);
+        values.put("is_active", 1);
+        //values.put("user_id", userId);
+        long result = db.insert(TB_QUIZ, null, values);
+        db.close();
+        return result != -1;
+    }
+
 }

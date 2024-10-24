@@ -33,9 +33,6 @@ public class HomeFragment extends Fragment {
 
     private void bindingView() {
         dbContext = new DBContext(getContext());
-
-
-
     }
 
     private void bindingAction() {

@@ -13,6 +13,12 @@
         android:theme="@style/Theme.SE1730Assignment"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.AddQuiz"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.HomePage"
             android:exported="false" />
         <activity
@@ -33,9 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>
