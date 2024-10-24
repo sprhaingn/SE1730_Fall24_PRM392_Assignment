@@ -43,7 +43,6 @@ public class HomePage extends AppCompatActivity {
     private boolean onClickNavigation(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.navigation_home:
-                startActivity(new Intent(this, HomePage.class));
                 return true;
             case R.id.navigation_add:
                 return true;

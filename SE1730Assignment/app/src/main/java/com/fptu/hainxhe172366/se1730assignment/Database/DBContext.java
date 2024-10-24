@@ -51,7 +51,7 @@ public class DBContext extends SQLiteOpenHelper {
                     "    is_true BIT DEFAULT 0 NOT NULL" +
                     ");";
 
-    public DBContext(@Nullable Context context) {
+    public DBContext(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

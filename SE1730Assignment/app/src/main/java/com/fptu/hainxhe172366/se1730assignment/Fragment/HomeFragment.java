@@ -26,16 +26,19 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         bindingView();
         bindingAction();
-        View view = inflater.inflate(R.layout.quizmate_setsofquiz, container, false);
+        View view = inflater.inflate(R.layout.quizmate_fragment_quiz_sets, container, false);
 
-        return inflater.inflate(R.layout.quizmate_setsofquiz, container, false);
-    }
-
-    private void bindingAction() {
-
+        return inflater.inflate(R.layout.quizmate_fragment_quiz_sets, container, false);
     }
 
     private void bindingView() {
+        dbContext = new DBContext(getContext());
+
+
+
+    }
+
+    private void bindingAction() {
 
     }
 }
