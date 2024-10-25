@@ -52,11 +52,11 @@ public class AddQuiz extends AppCompatActivity {
 
         DBContext dbContext = new DBContext(this);
 
-        boolean newQuiz = dbContext.addQuiz(quizName, addedDate);
+        boolean newQuiz = dbContext.addQuiz(quizName, addedDate, this);
 
         if (newQuiz) {
             Toast.makeText(this, "Quiz added successfully.", Toast.LENGTH_SHORT).show();
-            edtName.setText(""); // Clear the input field after adding
+            edtName.setText("");
         } else {
             Toast.makeText(this, "Failed to add quiz.", Toast.LENGTH_SHORT).show();
         }

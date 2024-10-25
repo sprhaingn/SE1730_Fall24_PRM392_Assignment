@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.Login"
+    android:background="#1A1A2E"
     android:id="@+id/login">
 
     <ImageView
@@ -16,7 +17,8 @@
         android:src="@drawable/ic_logo_quizmate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#FFFFFF"/>
 
     <EditText
         android:id="@+id/edtEmail"
@@ -27,6 +29,8 @@
         android:layout_marginEnd="32dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -42,6 +46,8 @@
         android:layout_marginEnd="32dp"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Forgot password?"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +89,7 @@
         android:focusable="true"
         android:minHeight="48dp"
         android:text="Don't have an account? Sign up"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

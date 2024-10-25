@@ -1,6 +1,8 @@
 package com.fptu.hainxhe172366.se1730assignment.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,10 +56,11 @@ public class Login extends AppCompatActivity {
         }
 
         DBContext dbContext = new DBContext(this);
+        int userId = dbContext.validateUser(email, password);
 
-        boolean isValidUser = dbContext.validateUser(email, password);
-        if (isValidUser) {
+        if (userId != -1) {
             Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+            saveUserId(userId);
             Intent intent = new Intent(this, HomePage.class);
             startActivity(intent);
             finish();
@@ -78,5 +81,12 @@ public class Login extends AppCompatActivity {
         });
         bindingView();
         bindingAction();
+    }
+
+    private void saveUserId(int userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("userId", userId);
+        editor.apply();
     }
 }

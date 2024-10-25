@@ -2,6 +2,7 @@ package com.fptu.hainxhe172366.se1730assignment.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -87,26 +88,38 @@ public class DBContext extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean validateUser(String email, String password) {
+    public int validateUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
+        String query = "SELECT user_id FROM user WHERE user_email = ? AND user_password = ?";
         Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
-        boolean userExists = cursor.getCount() > 0;
+        int userId = -1;
+        if (cursor.moveToFirst()) {
+            userId = cursor.getInt(0);
+        }
         cursor.close();
-        return userExists;
+        return userId;
     }
 
-    public boolean addQuiz(String quizName, String addedDate) {
+    public boolean addQuiz(String quizName, String addedDate, Context context) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("quiz_name", quizName);
         values.put("addedDate", addedDate);
         values.put("is_active", 1);
-//        values.put("user_id",  );
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", -1); // -1 if not found
+        if (userId == -1) {
+            db.close();
+            return false;
+        }
+
+        values.put("user_id", userId);
         long result = db.insert(TB_QUIZ, null, values);
         db.close();
         return result != -1;
     }
+
 
 }

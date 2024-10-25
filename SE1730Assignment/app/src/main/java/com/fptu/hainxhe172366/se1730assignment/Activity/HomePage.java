@@ -1,6 +1,8 @@
 package com.fptu.hainxhe172366.se1730assignment.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -71,4 +73,6 @@ public class HomePage extends AppCompatActivity {
                 .replace(R.id.container, fragment)
                 .commit();
     }
+
+
 }
