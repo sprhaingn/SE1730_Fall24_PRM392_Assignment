@@ -9,6 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
+import com.fptu.hainxhe172366.se1730assignment.Entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBContext extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "QuizMate";
@@ -17,6 +23,11 @@ public class DBContext extends SQLiteOpenHelper {
     private static final String TB_QUIZ = "quiz";
     private static final String TB_QUESTION = "question";
     private static final String TB_ANSWER = "answer";
+
+    private static final String QUIZ_ID = "quiz_id";
+    private static final String QUIZ_NAME = "quiz_name";
+    private static final String QUIZ_ADDED_DATE = "addedDate";
+    private static final String QUIZ_AUTHOR = "user_id";
 
     private static final String CREATE_TB_USER =
             "CREATE TABLE user (" +
@@ -75,6 +86,25 @@ public class DBContext extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public List<Quiz> getAllQuizzes() {
+        List<Quiz> quizzes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_QUIZ + " WHERE is_active = 1", null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(QUIZ_ID));
+                String quizName = cursor.getString(cursor.getColumnIndexOrThrow(QUIZ_NAME));
+                String addedDate = cursor.getString(cursor.getColumnIndexOrThrow(QUIZ_ADDED_DATE));
+                int userId = cursor.getInt(cursor.getColumnIndexOrThrow(QUIZ_AUTHOR));
+                Quiz quiz = new Quiz(id, quizName, addedDate, true, userId);
+                quizzes.add(quiz);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return quizzes;
+    }
+
     public boolean addUser(String userName, String userEmail, String userPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -109,7 +139,7 @@ public class DBContext extends SQLiteOpenHelper {
         values.put("is_active", 1);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("userId", -1); // -1 if not found
+        int userId = sharedPreferences.getInt("userId", -1);
         if (userId == -1) {
             db.close();
             return false;
@@ -119,6 +149,22 @@ public class DBContext extends SQLiteOpenHelper {
         long result = db.insert(TB_QUIZ, null, values);
         db.close();
         return result != -1;
+    }
+
+    public User getUser(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM user WHERE user_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        User user = null;
+        if (cursor.moveToFirst()) {
+            user = new User();
+            user.setId(cursor.getInt(0));
+            user.setUsername(cursor.getString(1));
+            user.setEmail(cursor.getString(2));
+            user.setPassword(cursor.getString(3));
+        }
+        cursor.close();
+        return user;
     }
 
 

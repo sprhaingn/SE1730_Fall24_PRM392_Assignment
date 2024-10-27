@@ -7,7 +7,6 @@
     android:background="#1A1A2E"
     android:padding="16dp">
 
-    <!-- Toolbar section with Title and Plus button -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -27,21 +26,18 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/logoutBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end"
-            android:clickable="true"
-            android:contentDescription="Add new collection"
-            android:padding="8dp"
-            android:src="@drawable/ic_add"
-            app:tint="#FFFFFF"
+            android:src="@drawable/ic_logout"
+            app:layout_constraintVertical_bias="0.25"
             tools:ignore="TouchTargetSizeCheck"
             tools:layout_editor_absoluteX="339dp"
-            tools:layout_editor_absoluteY="12dp" />
+            tools:layout_editor_absoluteY="12dp"/>
+
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- RecyclerView for displaying quiz/collection list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_collections"
         android:layout_width="match_parent"
