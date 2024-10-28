@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fptu.hainxhe172366.se1730assignment.Activity.Study;
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
 import com.fptu.hainxhe172366.se1730assignment.Entity.User;
@@ -32,7 +33,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
 
     public void updateData(List<Quiz> newQuizList) {
         this.quizzes = newQuizList;
-        this.filteredQuizzes = new ArrayList<Quiz>();
+        this.filteredQuizzes = new ArrayList<>(newQuizList);
         notifyDataSetChanged();
     }
 
@@ -73,6 +74,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     public class QuizViewHolder extends RecyclerView.ViewHolder {
         private TextView quizName;
         private TextView authorName;
+        private TextView termsCount;
 
         public QuizViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,9 +87,9 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         private void onClickStudy(View view) {
-//            Intent intent = new Intent(context, StudyActivity.class);
-//            intent.putExtra("quiz_id", quizzes.get(getAdapterPosition()).getQuiz_id());
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, Study.class);
+            intent.putExtra("quiz_id", quizzes.get(getAdapterPosition()).getQuiz_id());
+            context.startActivity(intent);
         }
 
         private void bindingView() {

@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.fptu.hainxhe172366.se1730assignment.Fragment.HomeFragment;
+import com.fptu.hainxhe172366.se1730assignment.Fragment.MyQuizFragment;
 import com.fptu.hainxhe172366.se1730assignment.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -58,7 +59,7 @@ public class HomePage extends AppCompatActivity {
                 startActivity(new Intent(this, AddQuiz.class));
                 return true;
             } else if (itemId == R.id.navigation_myset) {
-//                loadFragment(new MenuFragment());
+                loadFragment(new MyQuizFragment());
                 return true;
             }
             return false;

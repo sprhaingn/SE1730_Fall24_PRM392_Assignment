@@ -4,10 +4,12 @@ import static java.time.LocalDateTime.now;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,9 @@ public class AddQuiz extends AppCompatActivity {
     private void bindingView() {
         btnAdd = findViewById(R.id.btnAdd);
         edtName = findViewById(R.id.edtName);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void bindingAction() {
@@ -60,6 +65,14 @@ public class AddQuiz extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Failed to add quiz.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -1,40 +1,39 @@
 package com.fptu.hainxhe172366.se1730assignment.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import androidx.appcompat.widget.SearchView;
 
 import com.fptu.hainxhe172366.se1730assignment.Adapter.QuizAdapter;
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
+import com.fptu.hainxhe172366.se1730assignment.Entity.Question;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
 import com.fptu.hainxhe172366.se1730assignment.R;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+
+public class MyQuizFragment extends Fragment {
     private RecyclerView recyclerView;
     private QuizAdapter quizAdapter;
     private DBContext dbContext;
     private List<Quiz> quizList;
-    private SearchView searchView;
-    private EditText searchEditText;
-    private ImageView logoutBtn;
+    private ImageView btnLogout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.quizmate_fragment_quiz_sets, container, false);
+        View view = inflater.inflate(R.layout.quizmate_fragment_my_set, container, false);
 
         bindingView(view);
         bindingAction();
@@ -44,45 +43,39 @@ public class HomeFragment extends Fragment {
 
     private void bindingView(View view) {
         dbContext = new DBContext(getContext());
-        searchView = view.findViewById(R.id.searchEditText);
-        searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.myQuizRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        btnLogout = view.findViewById(R.id.logoutBtn);
     }
 
     private void bindingAction() {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(quizAdapter != null) {
-                    quizAdapter.filter(newText);
-                }
-                return true;
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         loadData();
-        if(quizAdapter != null) {
-            quizAdapter.filter("");
-        }
     }
 
     private void loadData() {
-        List<Quiz> quizList = dbContext.getAllQuizzes();
-        if(quizAdapter == null) {
+        SharedPreferences sharedPreferences = this.getContext().getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", -1);
+        if (userId == -1) {
+            return;
+        }
+
+        List<Quiz> quizList = dbContext.getAllMyQuizzes(userId);
+        if (quizList == null || quizList.isEmpty()) {
+            return;
+        }
+
+        if (quizAdapter == null) {
             quizAdapter = new QuizAdapter(quizList, getContext());
             recyclerView.setAdapter(quizAdapter);
         } else {
             quizAdapter.updateData(quizList);
         }
     }
+
+
 }
