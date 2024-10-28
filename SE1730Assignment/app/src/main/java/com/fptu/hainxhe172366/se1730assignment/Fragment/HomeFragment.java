@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +21,10 @@ import com.fptu.hainxhe172366.se1730assignment.R;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private QuizAdapter quizAdapter;
+    private RecyclerView homeRecyclerView;
+    private QuizAdapter homeQuizAdapter;
     private DBContext dbContext;
-    private List<Quiz> quizList;
+    private List<Quiz> homeQuizList;
     private SearchView searchView;
     private EditText searchEditText;
     private ImageView logoutBtn;
@@ -46,8 +44,8 @@ public class HomeFragment extends Fragment {
         dbContext = new DBContext(getContext());
         searchView = view.findViewById(R.id.searchEditText);
         searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        homeRecyclerView = view.findViewById(R.id.recyclerView);
+        homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void bindingAction() {
@@ -59,8 +57,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(quizAdapter != null) {
-                    quizAdapter.filter(newText);
+                if(homeQuizAdapter != null) {
+                    homeQuizAdapter.filter(newText);
                 }
                 return true;
             }
@@ -71,18 +69,18 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadData();
-        if(quizAdapter != null) {
-            quizAdapter.filter("");
+        if(homeQuizAdapter != null) {
+            homeQuizAdapter.filter("");
         }
     }
 
     private void loadData() {
-        List<Quiz> quizList = dbContext.getAllQuizzes();
-        if(quizAdapter == null) {
-            quizAdapter = new QuizAdapter(quizList, getContext());
-            recyclerView.setAdapter(quizAdapter);
+        homeQuizList = dbContext.getAllQuizzes();
+        if(homeQuizAdapter == null) {
+            homeQuizAdapter = new QuizAdapter(homeQuizList, getContext());
+            homeRecyclerView.setAdapter(homeQuizAdapter);
         } else {
-            quizAdapter.updateData(quizList);
+            homeQuizAdapter.updateData(homeQuizList);
         }
     }
 }

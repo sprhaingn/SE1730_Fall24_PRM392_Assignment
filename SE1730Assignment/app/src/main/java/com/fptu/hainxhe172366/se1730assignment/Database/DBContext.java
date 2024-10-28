@@ -170,8 +170,11 @@ public class DBContext extends SQLiteOpenHelper {
     public List<Quiz> getAllMyQuizzes(int userId) {
         List<Quiz> quizzes = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
+        if (db == null) {
+            return quizzes;
+        }
         Cursor cursor = db.rawQuery("SELECT * FROM " + TB_QUIZ + " WHERE is_active = 1 AND user_id = ?", new String[]{String.valueOf(userId)});
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow(QUIZ_ID));
                 String quizName = cursor.getString(cursor.getColumnIndexOrThrow(QUIZ_NAME));
@@ -179,8 +182,8 @@ public class DBContext extends SQLiteOpenHelper {
                 Quiz quiz = new Quiz(id, quizName, addedDate, true, userId);
                 quizzes.add(quiz);
             } while (cursor.moveToNext());
+            cursor.close();
         }
-        cursor.close();
         db.close();
         return quizzes;
     }

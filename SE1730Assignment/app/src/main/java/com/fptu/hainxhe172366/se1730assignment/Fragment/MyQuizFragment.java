@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 
 import com.fptu.hainxhe172366.se1730assignment.Adapter.QuizAdapter;
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
-import com.fptu.hainxhe172366.se1730assignment.Entity.Question;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
 import com.fptu.hainxhe172366.se1730assignment.R;
 
@@ -24,10 +22,10 @@ import java.util.List;
 
 
 public class MyQuizFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private QuizAdapter quizAdapter;
+    private RecyclerView myQuizRecyclerView;
+    private QuizAdapter myQuizAdapter;
     private DBContext dbContext;
-    private List<Quiz> quizList;
+    private List<Quiz> myQuizList;
     private ImageView btnLogout;
 
     @Override
@@ -43,8 +41,8 @@ public class MyQuizFragment extends Fragment {
 
     private void bindingView(View view) {
         dbContext = new DBContext(getContext());
-        recyclerView = view.findViewById(R.id.myQuizRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        myQuizRecyclerView = view.findViewById(R.id.myQuizRecyclerView);
+        myQuizRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         btnLogout = view.findViewById(R.id.logoutBtn);
     }
 
@@ -55,6 +53,9 @@ public class MyQuizFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadData();
+        if(myQuizAdapter != null) {
+            myQuizAdapter.filter("");
+        }
     }
 
     private void loadData() {
@@ -64,17 +65,13 @@ public class MyQuizFragment extends Fragment {
             return;
         }
 
-        List<Quiz> quizList = dbContext.getAllMyQuizzes(userId);
-        if (quizList == null || quizList.isEmpty()) {
+        myQuizList = dbContext.getAllMyQuizzes(userId);
+        if (myQuizList == null || myQuizList.isEmpty()) {
             return;
         }
 
-        if (quizAdapter == null) {
-            quizAdapter = new QuizAdapter(quizList, getContext());
-            recyclerView.setAdapter(quizAdapter);
-        } else {
-            quizAdapter.updateData(quizList);
-        }
+        myQuizAdapter = new QuizAdapter(myQuizList, getContext());
+        myQuizRecyclerView.setAdapter(myQuizAdapter);
     }
 
 

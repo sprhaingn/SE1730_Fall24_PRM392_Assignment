@@ -89,6 +89,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         private void onClickStudy(View view) {
             Intent intent = new Intent(context, Study.class);
             intent.putExtra("quiz_id", quizzes.get(getAdapterPosition()).getQuiz_id());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(intent);
         }
 
