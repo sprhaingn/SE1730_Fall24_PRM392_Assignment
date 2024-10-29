@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.fptu.hainxhe172366.se1730assignment.Activity.Login;
 import com.fptu.hainxhe172366.se1730assignment.Adapter.QuizAdapter;
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
@@ -66,7 +65,7 @@ public class MyQuizFragment extends Fragment {
         Log.d("MyQuizFragment", "onClickLogOut");
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
         sharedPreferences.edit().clear().apply();
-        Intent intent = new Intent(getActivity(), Login.class);
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
         getActivity().finish();
     }

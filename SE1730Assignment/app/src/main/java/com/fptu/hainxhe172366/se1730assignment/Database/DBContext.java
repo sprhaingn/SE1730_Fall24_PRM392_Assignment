@@ -136,7 +136,7 @@ public class DBContext extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("quiz_name", quizName);
         values.put("addedDate", addedDate);
-        values.put("is_active", 1);
+        values.put("is_active", 0);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
