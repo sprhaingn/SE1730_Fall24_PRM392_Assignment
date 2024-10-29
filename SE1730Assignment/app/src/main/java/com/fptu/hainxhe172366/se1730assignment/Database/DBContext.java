@@ -59,9 +59,9 @@ public class DBContext extends SQLiteOpenHelper {
             "CREATE TABLE answer (" +
                     "    answer_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "    question_id INTEGER REFERENCES question(question_id) NOT NULL, " +
-                    "    answer_content NVARCHAR(4000) NOT NULL, " +
-                    "    is_true BIT DEFAULT 0 NOT NULL" +
+                    "    answer_content NVARCHAR(4000) NOT NULL" +
                     ");";
+
 
     public DBContext(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

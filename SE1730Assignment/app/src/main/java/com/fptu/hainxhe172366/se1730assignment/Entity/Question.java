@@ -13,6 +13,12 @@ public class Question {
         this.isActive = isActive;
     }
 
+    public Question(int quizId, String questionContent, boolean isActive) {
+        this.quizId = quizId;
+        this.questionContent = questionContent;
+        this.isActive = isActive;
+    }
+
     public int getQuestionId() {
         return questionId;
     }
