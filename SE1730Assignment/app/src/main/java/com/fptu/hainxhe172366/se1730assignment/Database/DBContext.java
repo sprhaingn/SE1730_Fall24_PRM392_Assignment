@@ -188,4 +188,16 @@ public class DBContext extends SQLiteOpenHelper {
         return quizzes;
     }
 
+    public boolean addQuestion(String questionContent, int quizId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("quiz_id", quizId);
+        values.put("question_content", questionContent);
+        values.put("is_active", 1);
+
+        long result = db.insert(TB_QUESTION, null, values);
+        db.close();
+        return result != -1;
+    }
+
 }

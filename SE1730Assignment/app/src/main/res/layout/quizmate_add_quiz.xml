@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/create_quiz_menu"
+        app:menu="@menu/create_question_menu"
         app:navigationIcon="@drawable/ic_back"
         app:title="Add Quiz"
         app:titleTextColor="#FFFFFF" />

@@ -2,10 +2,13 @@ package com.fptu.hainxhe172366.se1730assignment.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,12 +23,10 @@ import java.util.List;
 
 public class AddQuestionAdapter extends RecyclerView.Adapter<AddQuestionAdapter.ViewHolder> {
     private List<Question> questions;
-    private List<Answer> answers;
     private Context context;
 
-    public AddQuestionAdapter(List<Question> questions, List<Answer> answers, Context context) {
+    public AddQuestionAdapter(List<Question> questions, Context context) {
         this.questions = questions;
-        this.answers = answers;
         this.context = context;
     }
 
@@ -40,10 +41,14 @@ public class AddQuestionAdapter extends RecyclerView.Adapter<AddQuestionAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Question question = questions.get(position);
-        Answer answer = answers.get(position);
-        holder.edtQuestionContent.setText(question.getQuestionContent());
-        holder.edtAnswerContent.setText(answer.getAnswerContent());
+        holder.setData(question);
         holder.tvQuestionNumber.setText("Question " + (position + 1));
+        holder.imgCancel.setOnClickListener(v -> onClickCancel(position));
+    }
+
+    private void onClickCancel(int position) {
+        questions.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
@@ -53,27 +58,37 @@ public class AddQuestionAdapter extends RecyclerView.Adapter<AddQuestionAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private EditText edtQuestionContent;
-        private EditText edtAnswerContent;
         private TextView tvQuestionNumber;
+        private ImageView imgCancel;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             bindingView();
-            bindingAction();
-        }
-
-        private void bindingAction() {
         }
 
         private void bindingView() {
             edtQuestionContent = itemView.findViewById(R.id.edtQuestionContent);
-            edtAnswerContent = itemView.findViewById(R.id.edtAnswerContent);
             tvQuestionNumber = itemView.findViewById(R.id.tvQuestionNumber);
+            imgCancel = itemView.findViewById(R.id.imgCancel);
+            edtQuestionContent.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Question question = questions.get(getAdapterPosition());
+                    question.setQuestionContent(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
         }
 
-        public void setData(Question question, Answer answer) {
+        public void setData(Question question) {
             edtQuestionContent.setText(question.getQuestionContent());
-            edtAnswerContent.setText(answer.getAnswerContent());
         }
     }
 }
