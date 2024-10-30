@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.fptu.hainxhe172366.se1730assignment.Entity.Answer;
+import com.fptu.hainxhe172366.se1730assignment.Entity.Question;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
 import com.fptu.hainxhe172366.se1730assignment.Entity.User;
 
@@ -131,24 +133,24 @@ public class DBContext extends SQLiteOpenHelper {
         return userId;
     }
 
-    public boolean addQuiz(String quizName, String addedDate, Context context) {
+    public long addQuiz(String quizName, String addedDate, Context context) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("quiz_name", quizName);
         values.put("addedDate", addedDate);
-        values.put("is_active", 0);
+        values.put("is_active", 1);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
         if (userId == -1) {
             db.close();
-            return false;
+            return -1;
         }
 
         values.put("user_id", userId);
         long result = db.insert(TB_QUIZ, null, values);
         db.close();
-        return result != -1;
+        return result;
     }
 
     public User getUser(int userId) {
@@ -188,8 +190,9 @@ public class DBContext extends SQLiteOpenHelper {
         return quizzes;
     }
 
-    public boolean addQuestion(String questionContent, int quizId) {
+    public boolean addQuestion(int quizId, String questionContent) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put("quiz_id", quizId);
         values.put("question_content", questionContent);
@@ -199,5 +202,42 @@ public class DBContext extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
+
+    public List<Question> getAllQuestionsByQuizId(int quizId) {
+        List<Question> questions = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_QUESTION + " WHERE quiz_id = ? AND is_active = 1", new String[]{String.valueOf(quizId)});
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("question_id"));
+                int quizIdValue = cursor.getInt(cursor.getColumnIndexOrThrow("quiz_id"));
+                String questionContent = cursor.getString(cursor.getColumnIndexOrThrow("question_content"));
+                Question question = new Question(id, quizIdValue, questionContent, true);
+                questions.add(question);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return questions;
+    }
+
+    public List<Answer> getAllAnswersByQuestionId(int questionId) {
+        List<Answer> answers = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_ANSWER + " WHERE question_id = ?", new String[]{String.valueOf(questionId)});
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("answer_id"));
+                int questionIdValue = cursor.getInt(cursor.getColumnIndexOrThrow("question_id"));
+                String answerContent = cursor.getString(cursor.getColumnIndexOrThrow("answer_content"));
+                Answer answer = new Answer(id, questionIdValue, answerContent);
+                answers.add(answer);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return answers;
+    }
+
 
 }

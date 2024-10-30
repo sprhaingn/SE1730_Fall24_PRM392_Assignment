@@ -3,12 +3,17 @@ package com.fptu.hainxhe172366.se1730assignment.Fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
@@ -33,6 +38,26 @@ public class AddQuizFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.create_question_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_save) {
+            onClickAddQuiz(null);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void bindingView(View view) {
         btnAdd = view.findViewById(R.id.btnAdd);
         edtName = view.findViewById(R.id.edtName);
@@ -55,13 +80,17 @@ public class AddQuizFragment extends Fragment {
         String addedDate = formatter.format(date);
 
         DBContext dbContext = new DBContext(getActivity());
-        boolean newQuiz = dbContext.addQuiz(quizName, addedDate, getActivity());
+        long quizId = dbContext.addQuiz(quizName, addedDate, getActivity());
 
-        if (newQuiz) {
+        if (quizId > 0) {
             Toast.makeText(getActivity(), "Quiz added successfully.", Toast.LENGTH_SHORT).show();
             edtName.setText("");
 
             AddQuestionFragment fragment = new AddQuestionFragment();
+            Bundle bundle = new Bundle();
+            bundle.putLong("quiz_id", quizId);
+            fragment.setArguments(bundle);
+
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.addQuizContainer, fragment)
                     .commit();

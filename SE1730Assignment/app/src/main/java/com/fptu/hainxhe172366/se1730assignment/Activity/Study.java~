@@ -70,6 +70,12 @@ public class Study extends AppCompatActivity {
             for (Question question : questions) {
                 List<Answer> answers = dbContext.getAllAnswersByQuestionId(question.getQuestionId());
                 allAnswers.addAll(answers);
+                if (!allAnswers.isEmpty()) {
+                    StudyQuestionAdapter adapter = new StudyQuestionAdapter(questions, allAnswers, this);
+                    studyRecyclerView.setAdapter(adapter);
+                } else {
+                    // Handle the case where there are no answers
+                }
             }
 
             RecyclerView recyclerView = findViewById(R.id.studyRecyclerView);

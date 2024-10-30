@@ -75,13 +75,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/studyRecyclerView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:layout_marginTop="16dp"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userProfileImage" />
+        app:layout_constraintTop_toBottomOf="@id/userName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
