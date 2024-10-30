@@ -83,6 +83,11 @@ public class Study extends AppCompatActivity {
     private void setupRecyclerView(int quizId) {
         DBContext dbContext = new DBContext(this);
         List<Question> questions = dbContext.getAllQuestionsByQuizId(quizId);
+        if (!questions.isEmpty()) {
+            btnStudy.setText(questions.get(0).getQuestionContent());
+        }else{
+            btnStudy.setText("No questions found");
+        }
         List<Answer> allAnswers = new ArrayList<>();
         for (Question question : questions) {
             List<Answer> answers = dbContext.getAllAnswersByQuestionId(question.getQuestionId());

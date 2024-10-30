@@ -92,6 +92,11 @@ public class AddQuestionFragment extends Fragment {
             for (Question question : questions) {
                 String questionContent = question.getQuestionContent();
 
+                if (questionContent.isEmpty()) {
+                    Toast.makeText(getActivity(), "Question content cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 boolean added = dbContext.addQuestion((int) quizId, questionContent);
                 if (!added) {
                     Toast.makeText(getActivity(), "Failed to add question", Toast.LENGTH_SHORT).show();
@@ -111,5 +116,4 @@ public class AddQuestionFragment extends Fragment {
                     .commit();
         }
     }
-
 }

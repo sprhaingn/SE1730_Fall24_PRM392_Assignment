@@ -272,5 +272,19 @@ public class DBContext extends SQLiteOpenHelper {
         return result != -1;
     }
 
-
+    public List<Question> getFirstQuestion(int quizId) {
+        List<Question> questions = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_QUESTION + " WHERE quiz_id = ? AND is_active = 1 LIMIT 1", new String[]{String.valueOf(quizId)});
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("question_id"));
+            int quizIdValue = cursor.getInt(cursor.getColumnIndexOrThrow("quiz_id"));
+            String questionContent = cursor.getString(cursor.getColumnIndexOrThrow("question_content"));
+            Question question = new Question(id, quizIdValue, questionContent, true);
+            questions.add(question);
+        }
+        cursor.close();
+        db.close();
+        return questions;
+    }
 }
