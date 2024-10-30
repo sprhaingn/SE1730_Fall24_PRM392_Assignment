@@ -11,6 +11,10 @@ public class Answer {
         this.answerContent = answerContent;
     }
 
+    public Answer() {
+
+    }
+
     public int getAnswerId() {
         return answerId;
     }

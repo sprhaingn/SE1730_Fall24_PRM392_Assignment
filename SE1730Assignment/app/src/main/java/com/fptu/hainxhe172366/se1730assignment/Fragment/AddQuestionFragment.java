@@ -1,12 +1,6 @@
 package com.fptu.hainxhe172366.se1730assignment.Fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,10 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.fptu.hainxhe172366.se1730assignment.Adapter.AddQuestionAdapter;
+import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Question;
 import com.fptu.hainxhe172366.se1730assignment.R;
-import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,10 +95,21 @@ public class AddQuestionFragment extends Fragment {
                 boolean added = dbContext.addQuestion((int) quizId, questionContent);
                 if (!added) {
                     Toast.makeText(getActivity(), "Failed to add question", Toast.LENGTH_SHORT).show();
-                    break;
+                    return;
                 }
             }
+
             Toast.makeText(getActivity(), "Questions added successfully", Toast.LENGTH_SHORT).show();
+
+            AddAnswerFragment addAnswerFragment = new AddAnswerFragment();
+            Bundle answerBundle = new Bundle();
+            answerBundle.putLong("quiz_id", quizId);
+            addAnswerFragment.setArguments(answerBundle);
+
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.addQuizContainer, addAnswerFragment)
+                    .commit();
         }
     }
+
 }
