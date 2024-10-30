@@ -29,27 +29,8 @@ import java.util.stream.Collectors;
 public class Study extends AppCompatActivity {
     private Button btnStudy;
     private Toolbar toolbar;
+    private RecyclerView recyclerView;
 
-    private void bindingView() {
-        btnStudy = findViewById(R.id.btnStudy);
-        toolbar = findViewById(R.id.toolbar);
-    }
-
-    private void bindingAction() {
-        btnStudy.setOnClickListener(this::onClickStudy);
-    }
-
-    private void onClickStudy(View view) {
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,19 +44,55 @@ public class Study extends AppCompatActivity {
         int quizId = intent.getIntExtra("quiz_id", -1);
 
         if (quizId != -1) {
-            DBContext dbContext = new DBContext(this);
-            List<Question> questions = dbContext.getAllQuestionsByQuizId(quizId);
-            List<Integer> questionIds = questions.stream().map(Question::getQuestionId).collect(Collectors.toList());
-            List<Answer> allAnswers = new ArrayList<>();
-            for (Question question : questions) {
-                List<Answer> answers = dbContext.getAllAnswersByQuestionId(question.getQuestionId());
-                allAnswers.addAll(answers);
-            }
-
-            RecyclerView recyclerView = findViewById(R.id.studyRecyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            StudyQuestionAdapter adapter = new StudyQuestionAdapter(questions, allAnswers, this);
-            recyclerView.setAdapter(adapter);
+            setupRecyclerView(quizId);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void bindingView() {
+        btnStudy = findViewById(R.id.btnStudy);
+        toolbar = findViewById(R.id.toolbar);
+        recyclerView = findViewById(R.id.studyRecyclerView);
+    }
+
+    private void bindingAction() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        btnStudy.setOnClickListener(this::onClickStudy);
+    }
+
+    private void onClickStudy(View view) {
+        Intent intent = getIntent();
+        int quizId = intent.getIntExtra("quiz_id", -1);
+
+        if (quizId != -1) {
+            Intent flashCardIntent = new Intent(this, FlashCard.class);
+            flashCardIntent.putExtra("quiz_id", quizId);
+            startActivity(flashCardIntent);
+        }
+    }
+
+    private void setupRecyclerView(int quizId) {
+        DBContext dbContext = new DBContext(this);
+        List<Question> questions = dbContext.getAllQuestionsByQuizId(quizId);
+        List<Answer> allAnswers = new ArrayList<>();
+        for (Question question : questions) {
+            List<Answer> answers = dbContext.getAllAnswersByQuestionId(question.getQuestionId());
+            allAnswers.addAll(answers);
+        }
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        StudyQuestionAdapter adapter = new StudyQuestionAdapter(questions, allAnswers, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+
 }
