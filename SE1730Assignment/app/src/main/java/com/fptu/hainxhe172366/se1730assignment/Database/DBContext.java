@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 import com.fptu.hainxhe172366.se1730assignment.Entity.Answer;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Question;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
@@ -206,7 +204,7 @@ public class DBContext extends SQLiteOpenHelper {
     public List<Question> getAllQuestionsByQuizId(int quizId) {
         List<Question> questions = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_QUESTION + " WHERE quiz_id = ? AND is_active = 1", new String[]{String.valueOf(quizId)});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_QUESTION + " WHERE quiz_id = ? AND is_active = 1 ORDER BY quiz_id ASC", new String[]{String.valueOf(quizId)});
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("question_id"));
@@ -221,7 +219,7 @@ public class DBContext extends SQLiteOpenHelper {
         return questions;
     }
 
-    public List<Answer> getAllAnswersByQuestionId(int questionId) {
+    public List<Answer> getAnswersByQuestionId(int questionId) {
         List<Answer> answers = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TB_ANSWER + " WHERE question_id = ?", new String[]{String.valueOf(questionId)});
@@ -287,4 +285,5 @@ public class DBContext extends SQLiteOpenHelper {
         db.close();
         return questions;
     }
+    
 }

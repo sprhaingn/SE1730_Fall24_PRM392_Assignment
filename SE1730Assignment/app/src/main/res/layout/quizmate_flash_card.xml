@@ -9,7 +9,7 @@
     tools:context=".Activity.FlashCard">
 
     <ImageView
-        android:id="@+id/exit_icon"
+        android:id="@+id/btnExit"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="16dp"
@@ -18,45 +18,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/edit_text_container"
+        android:id="@+id/flashCardContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_margin="20dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exit_icon"
-        app:layout_constraintBottom_toTopOf="@id/back_icon"
+        app:layout_constraintTop_toBottomOf="@id/btnExit"
+        app:layout_constraintBottom_toTopOf="@id/btnPrevious"
         android:background="@drawable/button_background">
 
         <TextView
-            android:id="@+id/input_text"
+            android:id="@+id/tvFlashCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter text here"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:gravity="center" />
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/back_icon"
+        android:id="@+id/btnPrevious"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="30dp"
         android:src="@drawable/ic_previous"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
-        android:id="@+id/next_icon"
+        android:id="@+id/btnNext"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-
+        android:layout_marginBottom="30dp"
         android:src="@drawable/ic_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

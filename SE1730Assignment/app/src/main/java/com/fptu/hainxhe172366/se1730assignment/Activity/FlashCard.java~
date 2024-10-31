@@ -65,6 +65,7 @@ public class FlashCard extends AppCompatActivity {
             displayCurrentQuestion();
             Log.d("FlashCard", "Current question index: " + currentQuestionIndex);
         } else {
+
         }
     }
 
@@ -74,6 +75,7 @@ public class FlashCard extends AppCompatActivity {
             displayCurrentQuestion();
             Log.d("FlashCard", "Current question index: " + currentQuestionIndex);
         } else {
+
         }
     }
 

@@ -5,14 +5,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +19,6 @@ import com.fptu.hainxhe172366.se1730assignment.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Study extends AppCompatActivity {
     private Button btnStudy;
@@ -90,7 +84,7 @@ public class Study extends AppCompatActivity {
         }
         List<Answer> allAnswers = new ArrayList<>();
         for (Question question : questions) {
-            List<Answer> answers = dbContext.getAllAnswersByQuestionId(question.getQuestionId());
+            List<Answer> answers = dbContext.getAnswersByQuestionId(question.getQuestionId());
             allAnswers.addAll(answers);
         }
 
