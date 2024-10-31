@@ -285,5 +285,49 @@ public class DBContext extends SQLiteOpenHelper {
         db.close();
         return questions;
     }
-    
+
+    public int getQuestionCountByQuizId(int quizId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM question WHERE quiz_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(quizId)});
+        int questionCount = 0;
+        if (cursor.moveToFirst()) {
+            questionCount = cursor.getInt(0);
+        }
+        cursor.close();
+        return questionCount;
+    }
+
+    public User getUserById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TB_USER + " WHERE " + "user_id" + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        User user = null;
+        if (cursor.moveToFirst()) {
+            user = new User();
+            user.setId(cursor.getInt(0));
+            user.setUsername(cursor.getString(1));
+            user.setEmail(cursor.getString(2));
+            user.setPassword(cursor.getString(3));
+        }
+        cursor.close();
+        return user;
+    }
+
+    public Quiz getQuizById(int quizId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TB_QUIZ + " WHERE " + QUIZ_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(quizId)});
+        Quiz quiz = null;
+        if (cursor.moveToFirst()) {
+            quiz = new Quiz();
+            quiz.setQuiz_id(cursor.getInt(0));
+            quiz.setQuiz_name(cursor.getString(1));
+            quiz.setAddedDate(cursor.getString(2));
+            quiz.setIs_active(cursor.getInt(3) == 1);
+            quiz.setUser_id(cursor.getInt(4));
+        }
+        cursor.close();
+        return quiz;
+    }
 }

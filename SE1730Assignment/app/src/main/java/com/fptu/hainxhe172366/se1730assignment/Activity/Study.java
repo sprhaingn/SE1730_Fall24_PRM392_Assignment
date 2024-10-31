@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,8 @@ import com.fptu.hainxhe172366.se1730assignment.Adapter.StudyQuestionAdapter;
 import com.fptu.hainxhe172366.se1730assignment.Database.DBContext;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Answer;
 import com.fptu.hainxhe172366.se1730assignment.Entity.Question;
+import com.fptu.hainxhe172366.se1730assignment.Entity.Quiz;
+import com.fptu.hainxhe172366.se1730assignment.Entity.User;
 import com.fptu.hainxhe172366.se1730assignment.R;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class Study extends AppCompatActivity {
     private Button btnStudy;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
+    private TextView authorName;
 
 
     @Override
@@ -54,6 +58,7 @@ public class Study extends AppCompatActivity {
         btnStudy = findViewById(R.id.btnStudy);
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.studyRecyclerView);
+        authorName = findViewById(R.id.authorName);
     }
 
     private void bindingAction() {
@@ -87,6 +92,11 @@ public class Study extends AppCompatActivity {
             List<Answer> answers = dbContext.getAnswersByQuestionId(question.getQuestionId());
             allAnswers.addAll(answers);
         }
+
+        Quiz quiz = dbContext.getQuizById(quizId);
+        int userId = quiz.getUser_id();
+        User user = dbContext.getUserById(userId);
+        authorName.setText(user.getUsername());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         StudyQuestionAdapter adapter = new StudyQuestionAdapter(questions, allAnswers, this);

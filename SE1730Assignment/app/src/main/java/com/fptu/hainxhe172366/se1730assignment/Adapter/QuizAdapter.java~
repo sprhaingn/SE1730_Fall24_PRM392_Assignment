@@ -111,7 +111,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             }
 
             int questionCount = dbContext.getQuestionCountByQuizId(quiz.getQuiz_id());
-            termsCount.setText(String.valueOf(questionCount + " Terms"));
+            termsCount.setText(String.valueOf(questionCount + "Terms"));
         }
     }
 }

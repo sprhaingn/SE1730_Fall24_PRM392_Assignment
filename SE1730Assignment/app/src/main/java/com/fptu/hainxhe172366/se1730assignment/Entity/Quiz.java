@@ -15,6 +15,10 @@ public class Quiz {
         this.user_id = user_id;
     }
 
+    public Quiz() {
+
+    }
+
     public int getQuiz_id() {
         return quiz_id;
     }
