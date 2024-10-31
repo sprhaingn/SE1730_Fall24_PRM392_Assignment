@@ -40,18 +40,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvQuestionNumber" />
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/edtAnswerContent"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="16dp"-->
-    <!--        android:backgroundTint="#2D2D44"-->
-    <!--        android:hint="Answer Content"-->
-    <!--        android:minHeight="48dp"-->
-    <!--        android:textColor="#FFFFFF"-->
-    <!--        android:textColorHint="#888888"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/edtQuestionContent" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>

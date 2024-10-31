@@ -73,6 +73,14 @@ public class AddAnswerAdapter extends RecyclerView.Adapter<AddAnswerAdapter.AddA
             tvQuestion = itemView.findViewById(R.id.tvQuestion);
             tvquestionNumber = itemView.findViewById(R.id.tvQuestionNumber);
             edtAnswer = itemView.findViewById(R.id.edtAnswer);
+            edtAnswer.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ((RecyclerView) itemView.getParent()).smoothScrollToPosition(position);
+                    }
+                }
+            });
             edtAnswer.addTextChangedListener(new TextWatcher() {
 
                 @Override
@@ -84,6 +92,9 @@ public class AddAnswerAdapter extends RecyclerView.Adapter<AddAnswerAdapter.AddA
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     Answer answer = answers.get(getAdapterPosition());
                     answer.setAnswerContent(charSequence.toString());
+
+                    DBContext dbContext = new DBContext(itemView.getContext());
+                    dbContext.activateQuiz((int) quizId);
                 }
 
                 @Override

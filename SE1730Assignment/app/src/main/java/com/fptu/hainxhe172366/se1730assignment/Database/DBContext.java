@@ -136,7 +136,7 @@ public class DBContext extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("quiz_name", quizName);
         values.put("addedDate", addedDate);
-        values.put("is_active", 1);
+        values.put("is_active", 0);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
@@ -329,5 +329,15 @@ public class DBContext extends SQLiteOpenHelper {
         }
         cursor.close();
         return quiz;
+    }
+
+    public boolean activateQuiz(int quizId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("is_active", 1);
+
+        int result = db.update(TB_QUIZ, values, QUIZ_ID + " = ?", new String[]{String.valueOf(quizId)});
+        db.close();
+        return result > 0;
     }
 }

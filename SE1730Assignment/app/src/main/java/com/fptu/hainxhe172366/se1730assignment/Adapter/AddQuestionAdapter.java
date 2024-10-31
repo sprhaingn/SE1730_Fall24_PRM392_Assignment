@@ -70,6 +70,14 @@ public class AddQuestionAdapter extends RecyclerView.Adapter<AddQuestionAdapter.
             edtQuestionContent = itemView.findViewById(R.id.edtQuestionContent);
             tvQuestionNumber = itemView.findViewById(R.id.tvQuestionNumber);
             imgCancel = itemView.findViewById(R.id.imgCancel);
+            edtQuestionContent.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ((RecyclerView) itemView.getParent()).smoothScrollToPosition(position);
+                    }
+                }
+            });
             edtQuestionContent.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
